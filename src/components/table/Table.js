@@ -58,12 +58,16 @@ class Table extends Component {
 
     componentWillUpdate(nextProps, nextState) {
         const {dispatch, type} = this.props;
+        const {rows} = this.state;
 
         if(
             JSON.stringify(nextState.selected) !==
             JSON.stringify(this.state.selected)
         ){
             dispatch(selectTableItems(nextState.selected, type));
+            const row = getItemsByProperty(rows, "id", nextState.selected[0]);
+            if(row[0] && row[0].supportIncludedViews){
+            }
         }
     }
 
