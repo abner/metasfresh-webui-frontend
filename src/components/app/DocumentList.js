@@ -13,7 +13,8 @@ import SockJs from 'sockjs-client';
 import Stomp from 'stompjs/lib/stomp.min.js';
 
 import {
-    initLayout
+    initLayout,
+    getData
 } from '../../actions/GenericActions';
 
 import {
@@ -322,6 +323,17 @@ class DocumentList extends Component {
     }
 
     // END OF MANAGING SORT, PAGINATION, FILTERS -------------------------------
+    
+    getIncludedView = (docId) => {
+        const {dispatch, windowType} = this.props;
+        const {viewId} = this.state;
+        
+        dispatch(getData(
+            'documentView', windowType, viewId, 'rows', docId, 'includedView'
+        )).then(response => {
+            console.log(response.data)
+        })
+    }
 
     render() {
         const {
@@ -412,6 +424,7 @@ class DocumentList extends Component {
                             defaultSelected={selected}
                             queryLimitHit={data.queryLimitHit}
                             doesSelectionExist={this.doesSelectionExist}
+                            selectionChanged={this.getIncludedView}
                         >
                             {layout.supportAttributes &&
                                 <DataLayoutWrapper

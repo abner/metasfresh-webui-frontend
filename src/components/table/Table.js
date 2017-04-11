@@ -57,7 +57,7 @@ class Table extends Component {
     }
 
     componentWillUpdate(nextProps, nextState) {
-        const {dispatch, type} = this.props;
+        const {dispatch, type, selectionChanged} = this.props;
         const {rows} = this.state;
 
         if(
@@ -67,6 +67,7 @@ class Table extends Component {
             dispatch(selectTableItems(nextState.selected, type));
             const row = getItemsByProperty(rows, "id", nextState.selected[0]);
             if(row[0] && row[0].supportIncludedViews){
+                selectionChanged();
             }
         }
     }
@@ -117,7 +118,6 @@ class Table extends Component {
                     this.selectOneProduct(this.state.rows[0].id);
                     document.getElementsByClassName('js-table')[0].focus();
                 }
-
             })
         } else {
             this.setState({
