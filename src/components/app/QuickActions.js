@@ -43,8 +43,18 @@ class QuickActions extends Component {
     }
 
     componentDidUpdate = (prevProps) => {
-        const {selected, refresh, shouldNotUpdate, viewId} = this.props;
+        const {
+            selected, refresh, shouldNotUpdate, viewId, windowType,
+            selectedWindowType, hasIncluded
+        } = this.props;
+        
         if(shouldNotUpdate){
+            return;
+        }
+
+        if(
+            (selectedWindowType && selectedWindowType !== windowType)
+        ){
             return;
         }
 
